@@ -11,7 +11,7 @@ export const DocViewer = ({ docName }: DocViewerProps) => {
 
   useEffect(() => {
     if (docName) {
-      fetch(`/docs/${docName}.md`)
+      fetch(`${import.meta.env.BASE_URL}docs/${docName}.md`)
         .then((response) => response.text())
         .then((text) => setMarkdownContent(text))
         .catch(console.error);
