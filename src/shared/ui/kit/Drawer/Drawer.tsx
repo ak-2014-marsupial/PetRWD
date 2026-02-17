@@ -7,9 +7,10 @@ interface DrawerProps {
     onClose: () => void;
     children: ReactNode;
     layoutId?: string;
+    footerContent:ReactNode;
 }
 
-export const Drawer = ({ onClose, children, layoutId }: DrawerProps) => {
+export const Drawer = ({ onClose, children, layoutId ,footerContent}: DrawerProps) => {
     return (
         <motion.div
             layout
@@ -27,6 +28,11 @@ export const Drawer = ({ onClose, children, layoutId }: DrawerProps) => {
                 </div>
                 <div className={css.content}>{children}</div>
             </motion.div>
+            {footerContent && (
+                <footer className={css.footer}>
+                    {footerContent}
+                </footer>
+            )}
         </motion.div>
     );
 };

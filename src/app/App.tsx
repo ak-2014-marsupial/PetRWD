@@ -9,11 +9,10 @@ export const App = () => {
     fontSizeService.init();
     themeService.init();
     themeSettingsService.init();
-  return (
-    <BrowserRouter>
-      <AppRouter />
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
+            <AppRouter />
+        </BrowserRouter>
+    );
 };
-
 
