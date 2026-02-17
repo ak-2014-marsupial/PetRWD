@@ -1,5 +1,5 @@
 import css from "./Toggle.module.css";
-import {memo} from "react";
+import {memo, type CSSProperties} from "react";
 
 interface ToggleProps {
     width?: string ;
@@ -14,7 +14,7 @@ export const Toggle = memo(({active, setActive, width = "2.5rem", size = "1rem"}
             <div className={css.Toggle} style={{width}}>
                 <input type="checkbox" checked={active} onChange={() => {
                 }} id="dark-mode"/>
-                <label style={{'--_after-size': size}} htmlFor="dark-mode" onClick={setActive}></label>
+                <label style={{'--_after-size': size} as CSSProperties} htmlFor="dark-mode" onClick={setActive}></label>
             </div>
         );
     }
