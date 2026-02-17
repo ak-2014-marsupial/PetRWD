@@ -20,7 +20,6 @@
 
   background-color: var(--_content-bg);
   color: var(--_content-text-color);
-
   flex-grow: 1;
   overflow-y: auto;
 }

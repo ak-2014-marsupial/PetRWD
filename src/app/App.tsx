@@ -10,7 +10,7 @@ export const App = () => {
     themeService.init();
     themeSettingsService.init();
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <AppRouter />
     </BrowserRouter>
   );

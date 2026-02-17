@@ -1,6 +1,9 @@
 .DocViewer{
     height: 100%;
     padding-left: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+
 }
 
 .DocViewer h1 {
