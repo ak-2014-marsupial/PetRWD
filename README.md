@@ -46,7 +46,7 @@ src/
 
 ###  Швидкий старт
 
-1. `git clone https://github.com/your-username/PetRWD.git`
+1. `git clone https://github.com/ak-2014-marsupial/PetRWD.git`
 2. `npm install`
 3. `npm run dev`
 
