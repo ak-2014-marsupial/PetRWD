@@ -1,5 +1,6 @@
 {
-  "name": "app",
+  "name": "pet_rwd",
+  "homepage": "https://ak-2014-marsupial.github.io/PetRWD.git",
   "private": true,
   "version": "0.0.0",
   "type": "module",
