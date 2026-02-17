@@ -1,0 +1,6 @@
+.ThemeToggle {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--layer-3-border);
+    display: flex;
+    color: var(--layer-3-text);
+}

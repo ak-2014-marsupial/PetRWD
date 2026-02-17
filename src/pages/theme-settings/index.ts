@@ -1,0 +1,1 @@
+export {ThemeSettingsPage} from "./ThemeSettingsPage.tsx"

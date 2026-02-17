@@ -1,0 +1,1 @@
+export {fontSizeService, FONT_SIZE_MAX_SIZE, FONT_SIZE_MIN_SIZE, FONT_SIZE_DEFAULT_SIZE} from "./font-size.ts"

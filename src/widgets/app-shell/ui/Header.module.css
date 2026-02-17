@@ -1,0 +1,29 @@
+.header {
+  /* Colors */
+  --_header-bg: var(--layer-3-bg);
+  --_header-bg-active: var(--layer-3-bg-active);
+  --_header-border-color: var(--layer-3-border);
+  --_header-text-color: var(--layer-3-text);
+  --_header-text-accent-color: var(--layer-3-text);
+
+
+
+  height: 3rem;
+  background-color: var(--_header-bg);
+  border-bottom: 1px solid var(--_header-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  color: var(--_header-text-color);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  gap: 0.8rem;
+}

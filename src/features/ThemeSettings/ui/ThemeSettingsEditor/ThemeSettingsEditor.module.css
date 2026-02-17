@@ -1,0 +1,83 @@
+.ThemeSettings {
+  padding: 1rem;
+  border: 1px solid var(--layer-1-border);
+  border-radius: 8px;
+  background-color: var(--layer-1-bg);
+  margin-top: 1rem;
+}
+
+.ThemeSettings h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--layer-1-text);
+  font-size: 1.1rem;
+}
+
+.ThemeSettings div {
+  margin-bottom: 0.8rem;
+}
+
+.ThemeSettings label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--layer-1-text-secondary);
+  font-size: 0.9rem;
+}
+
+.ThemeSettings input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 8px;
+  background: var(--layer-1-active); /* Adjusted for better visibility */
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  border-radius: 4px;
+}
+
+.ThemeSettings input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--layer-1-accent);
+  cursor: pointer;
+  border: 2px solid var(--layer-1-hover);
+}
+
+.ThemeSettings input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--layer-1-accent);
+  cursor: pointer;
+  border: 2px solid var(--layer-1-hover);
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.buttons button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+  background-color: var(--layer-1-accent);
+  color: var(--layer-1-on-accent);
+}
+
+.buttons button:hover {
+  background-color: color-mix(in srgb, var(--layer-1-accent) 80%, black);
+}
+
+.buttons button:active {
+  background-color: color-mix(in srgb, var(--layer-1-accent) 70%, black);
+}
+

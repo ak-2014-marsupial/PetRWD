@@ -1,0 +1,17 @@
+.footer {
+  /* Colors */
+  --_footer-bg: var(--layer-3-bg);
+  --_footer-bg-active: var(--layer-3-bg-active);
+  --_footer-border-color: var(--layer-3-border);
+  --_footer-text-color: var(--layer-3-text);
+  --_footer-text-accent-color: var(--layer-3-text);
+
+
+  height: 50px;
+  background-color: var(--_footer-bg);
+  border-top: 1px solid var(--_footer-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--_footer-text-color);
+}

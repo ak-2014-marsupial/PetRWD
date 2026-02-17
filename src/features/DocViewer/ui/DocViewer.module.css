@@ -1,0 +1,24 @@
+.DocViewer{
+    height: 100%;
+    padding-left: 1rem;
+}
+
+.DocViewer h1 {
+    color: var(--layer-1-text);
+    margin-bottom: 1rem;
+}
+
+.DocViewer p {
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+}
+
+.DocViewer ul {
+    list-style: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.DocViewer li {
+    margin-bottom: 0.4rem;
+}

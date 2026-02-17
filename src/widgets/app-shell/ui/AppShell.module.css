@@ -1,0 +1,26 @@
+.appShell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.content {
+  /* Colors */
+  --_content-bg: var(--layer-1-bg);
+  --_content-bg-active: var(--layer-1-active);
+  --_content-border-color: var(--layer-1-border);
+  --_content-text-color: var(--layer-1-text);
+  --_content-text-accent-color: var(--layer-1-text);
+
+  background-color: var(--_content-bg);
+  color: var(--_content-text-color);
+
+  flex-grow: 1;
+  overflow-y: auto;
+}
