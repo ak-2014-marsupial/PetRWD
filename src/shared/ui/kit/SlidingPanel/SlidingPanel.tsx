@@ -51,17 +51,12 @@ export const SlidingPanel = ({
                     className={className}
                     style={{
                         position: 'fixed',
-                        top: '15vh',
-                        maxWidth:"55vw",
                         [side]: 0,
-                        maxHeight: '75vh',
                         width: isCollapsed ? collapsedWidth : width,
                         zIndex: 1000,
                         overflow: 'hidden', // Обрезаем всё, что не влезает
-                        background: 'white',
                         display: 'flex',
                         flexDirection: 'column',
-                        boxShadow: '-5px 0 20px rgba(0,0,0,0.05)'
                     }}
                 >
                     {/* Внутренняя обертка для контента */}
