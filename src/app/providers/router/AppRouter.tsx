@@ -3,7 +3,7 @@ import {routerConfig} from '@/app/config';
 import {AppShell, Footer, Header, Sidebar} from '@/widgets/app-shell';
 import {ThemeSwitcher} from '@/features';
 
-import {ThemeColorEditorWithDrawer} from "@/features"
+import {ThemeSettingsDrawer} from "@/features"
 // import {useMemo} from 'react';
 
 const ActionSlot = () => {
@@ -17,7 +17,7 @@ const sidebarSlot = () => {
     return (
         <>
             <Sidebar navItems={routerConfig}/>
-            <ThemeColorEditorWithDrawer />
+            <ThemeSettingsDrawer />
         </>
     )
 }

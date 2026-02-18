@@ -1,7 +1,7 @@
 export * from './model';
-export {ThemeSettings} from './ui/ThemeSettings.tsx';
-export {ThemeColorEditorToggle} from "./ui/ThemeColorEditorToggle.tsx"
-export {ThemeColorEditorWithDrawer} from "./ui/ThemeColorEditorWithDrawer";
+export {ThemeSettingsView} from './ui/ThemeSettings.View.tsx';
+export {ThemeSettingsToggle} from "./ui/ThemeSettings.Toggle.tsx"
+export {ThemeSettingsDrawer} from "./ui/ThemeSettings.Drawer.tsx";
 
 
 export {useThemeDrawer} from "./lib/useThemeDrawer.ts"

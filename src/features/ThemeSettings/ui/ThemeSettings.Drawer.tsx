@@ -1,7 +1,7 @@
 import {Button, Slider, SlidingPanel, withDraggable} from '@/shared/ui';
 import {useThemeDrawer} from "@/features/ThemeSettings/lib/useThemeDrawer.ts";
 
-import css from "./ThemeColorEditorWithDrawerl.module.css";
+import css from "./ThemeSettings.Drawer.module.css";
 import {useTheme} from "@/shared/lib";
 import {useThemeEditor} from "@/features/ThemeSettings/lib/useThemeEditor.ts";
 import {FIELDS} from "@/features/ThemeSettings/model/config.ts";
@@ -17,7 +17,7 @@ const FloatingTrigger = withDraggable(({onClick}: { onClick: () => void }) => (
 
 
 
-export const ThemeColorEditorWithDrawer = () => {
+export const ThemeSettingsDrawer = () => {
     const {isOpen, toggleCollapsed, isCollapsed} = useThemeDrawer();
     const {theme} = useTheme();
     const {vars, setFieldValue, save, reset} = useThemeEditor(theme);

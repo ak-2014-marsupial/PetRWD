@@ -1,9 +1,9 @@
-import {ThemeSettings} from "@/features/ThemeSettings";
+import {ThemeSettingsView} from "@/features/ThemeSettings";
 
 
 const ThemeSettingsPage = () => {
     return (
-        <ThemeSettings/>
+        <ThemeSettingsView/>
     );
 };
 

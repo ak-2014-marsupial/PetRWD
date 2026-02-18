@@ -1,5 +1,5 @@
 import {HomePage, NotFoundPage, ThemeSettingsPage} from '@/pages';
-import {DocViewer,FontSizePicker, ThemeToggle, ThemeColorEditorToggle} from '@/features';
+import {DocViewer,FontSizePicker, ThemeToggle, ThemeSettingsToggle} from '@/features';
 
 import {
     FaHome, FaInfoCircle, FaPalette,
@@ -76,7 +76,7 @@ export const routerConfig: AppRoute[] = [
     },
     {
         id: 'theme-color-editor-toggle',
-        element: <ThemeColorEditorToggle/>,
+        element: <ThemeSettingsToggle/>,
         type: RouteType.COMPONENT,
         isNav: false,
         section: 'settings',
