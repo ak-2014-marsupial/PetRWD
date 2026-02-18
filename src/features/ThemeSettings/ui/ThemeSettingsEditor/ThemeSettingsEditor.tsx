@@ -2,7 +2,7 @@ import {type FC} from 'react';
 import {useTheme} from '@/shared/lib/theme/useTheme.ts';
 import {useThemeEditor} from "../../lib/useThemeEditor.ts";
 import {Slider, Button} from '@/shared/ui';
-import {FIELDS} from "../../config/fieldsCssColor.ts"
+import {FIELDS} from "../../model/config.ts"
 import css from './ThemeSettingsEditor.module.css';
 
 export const ThemeSettingsEditor: FC = () => {

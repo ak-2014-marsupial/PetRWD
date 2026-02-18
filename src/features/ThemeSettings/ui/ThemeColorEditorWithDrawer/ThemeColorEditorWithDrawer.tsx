@@ -4,7 +4,7 @@ import {useThemeDrawer} from "@/features/ThemeSettings/lib/useThemeDrawer.ts";
 import css from "./ThemeColorEditorWithDrawerl.module.css";
 import {useTheme} from "@/shared/lib";
 import {useThemeEditor} from "@/features/ThemeSettings/lib/useThemeEditor.ts";
-import {FIELDS} from "@/features/ThemeSettings/config/fieldsCssColor.ts";
+import {FIELDS} from "@/features/ThemeSettings/model/config.ts";
 
 const FloatingTrigger = withDraggable(({onClick}: { onClick: () => void }) => (
     <button
