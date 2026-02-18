@@ -1,77 +1,83 @@
 import { motion, AnimatePresence,type Variants } from 'framer-motion';
-import {type ReactNode} from "react"
+import {type ReactNode, useEffect, useState} from "react"
 
 type PanelSide = 'left' | 'right';
 
 interface SlidingPanelProps {
     isOpen: boolean;
-    isCollapsed?: boolean;
+    isCollapsed: boolean;
     side?: PanelSide;
     children: ReactNode;
     className?: string;
-    width?: string;
+    fullWidth?: string;
+    fullHeight?: string;
     collapsedWidth?: string;
+    collapsedHeight?: string;
 }
-
-const panelVariants: Variants = {
-    hidden: (side: PanelSide) => ({
-        x: side === 'right' ? '100%' : '-100%',
-        transition: { duration: 2, ease: 'easeInOut' }
-    }),
-    visible: {
-        x: 0,
-        // transition: { duration: 2, ease: 'easeInOut' }
-        transition: { type: 'spring', stiffness: 90, damping: 9, mass: 0.9 }
-    },
-    exit: (side: PanelSide) => ({
-        x: side === 'right' ? '100%' : '-100%',
-        transition: { duration: 2, ease: 'easeInOut' }
-    })
-};
 
 export const SlidingPanel = ({
                                  isOpen,
-                                 isCollapsed = false,
+                                 isCollapsed,
                                  side = 'right',
-                                 width = '20rem',
-                                 collapsedWidth = '80px',
+                                 fullWidth = '450px',
+                                 fullHeight = '70vh',
+                                 collapsedWidth = '10px',
+                                 collapsedHeight = '10px',
                                  children,
                                  className
                              }: SlidingPanelProps) => {
+    // Состояние для фиксации Y в момент схлопывания
+    const [targetY, setTargetY] = useState<string | number>('15vh');
+
+    useEffect(() => {
+        if (isCollapsed) {
+            // const savedY = localStorage.getItem('panel-y');
+            const savedY=700;
+            setTargetY(savedY ? `${savedY}px` : '15vh');
+        } else {
+            // Когда развертываемся — возвращаемся к стандарту
+            setTargetY('15vh');
+        }
+    }, [isCollapsed]); // Следим только за этим флагом
+
+    const variants: Variants = {
+        hidden: {
+            x: side === 'right' ? '100%' : '-100%',
+            opacity: 0
+        },
+        visible: {
+            x: 0,
+            opacity: 1,
+            width: isCollapsed ? collapsedWidth : fullWidth,
+            height: isCollapsed ? collapsedHeight : fullHeight,
+            top: targetY,
+            transition: { type: 'spring', stiffness: 90, damping: 12 }
+        }
+    };
+
     return (
-        <AnimatePresence custom={side}>
+        <AnimatePresence>
             {isOpen && (
                 <motion.div
                     layout
-                    custom={side}
-                    variants={panelVariants}
+                    variants={variants}
                     initial="hidden"
                     animate="visible"
-                    exit="exit"
+                    exit="hidden"
                     className={className}
                     style={{
                         position: 'fixed',
                         [side]: 0,
-                        width: isCollapsed ? collapsedWidth : width,
                         zIndex: 1000,
-                        overflow: 'hidden', // Обрезаем всё, что не влезает
+                        overflow: 'hidden',
                         display: 'flex',
                         flexDirection: 'column',
                     }}
                 >
-                    {/* Внутренняя обертка для контента */}
                     <motion.div
-                        animate={{
-                            opacity: isCollapsed ? 0 : 1,
-                            filter: isCollapsed ? 'blur(4px)' : 'blur(0px)' // Опционально: легкий блюр при скрытии
-                        }}
+                        animate={{ opacity: isCollapsed ? 0 : 1 }}
                         transition={{ duration: 2 }}
-                        style={{
-                            width: width, // Фиксируем ширину контента, чтобы он не сжимался
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column'
-                        }}
+                        style={{ width: fullWidth, height: fullHeight }}
                     >
                         {children}
                     </motion.div>

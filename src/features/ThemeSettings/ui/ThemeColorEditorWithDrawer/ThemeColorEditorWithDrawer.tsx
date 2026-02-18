@@ -30,8 +30,8 @@ export const ThemeColorEditorWithDrawer = () => {
                 isOpen={isOpen}
                 isCollapsed={isCollapsed}
                 side="right"
-                width="20rem"
-                collapsedWidth="70px"
+                fullWidth="20rem"
+                collapsedWidth="10px"
                 className={css.window}
             >
                 <div className={css.header}>
