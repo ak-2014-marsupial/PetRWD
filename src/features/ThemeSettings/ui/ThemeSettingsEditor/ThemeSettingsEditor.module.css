@@ -3,7 +3,7 @@
   border: 1px solid var(--layer-1-border);
   border-radius: 8px;
   background-color: var(--layer-1-bg);
-  margin-top: 1rem;
+  /*margin-top: 1rem;*/
 }
 
 .ThemeSettings h3 {

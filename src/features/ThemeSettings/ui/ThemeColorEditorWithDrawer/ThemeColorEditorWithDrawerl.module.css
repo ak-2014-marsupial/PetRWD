@@ -1,0 +1,14 @@
+.content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* Запрещаем перенос строк для текста, чтобы он не дергался при сужении */
+    white-space: nowrap;
+}
+
+.panelShadow {
+    background: #ffffff;
+    border-left: 1px solid var(--layer-3-border);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+}
