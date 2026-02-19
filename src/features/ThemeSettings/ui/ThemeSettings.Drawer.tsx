@@ -17,10 +17,33 @@ const FloatingTrigger = withDraggable(({onClick}: { onClick: () => void }) => (
 
 
 
+const DrawerContent = ({ theme }: { theme: string }) => {
+    const {vars, setFieldValue, save, reset} = useThemeEditor(theme);
+
+    return (
+        <>
+            <div className={css.content}>
+                <h3>Налаштування ({theme})</h3>
+                {FIELDS.map((field) => (
+                    <Slider
+                        key={field.id}
+                        {...field}
+                        value={vars[field.id]}
+                        onChange={setFieldValue}
+                    />
+                ))}
+            </div>
+            <div className={css.buttons}>
+                <Button onClick={save}>Зберегти</Button>
+                <Button onClick={reset}>Очистити</Button>
+            </div>
+        </>
+    );
+};
+
 export const ThemeSettingsDrawer = () => {
     const {isOpen, toggleCollapsed, isCollapsed} = useThemeDrawer();
     const {theme} = useTheme();
-    const {vars, setFieldValue, save, reset} = useThemeEditor(theme);
 
     return (
         <>
@@ -35,32 +58,10 @@ export const ThemeSettingsDrawer = () => {
                 className={css.window}
             >
                 <div className={css.header}>
-                    <Button
-                        onClick={toggleCollapsed}
-                    >Collapse</Button>
+                    <Button onClick={toggleCollapsed}>Collapse</Button>
                 </div>
-                <div key={theme} className={css.content}>
-                    <h3>Налаштування ({theme})</h3>
-
-                    {FIELDS.map((field) => (
-                        <Slider
-                            key={field.id}
-                            {...field}
-                            value={vars[field.id]}
-                            onChange={setFieldValue}
-                        />
-                    ))}
-
-
-
-                </div>
-                <div className={css.buttons}>
-                    <Button onClick={save}>Зберегти</Button>
-                    <Button onClick={reset}>Очистити</Button>
-                </div>
-
+                <DrawerContent key={theme} theme={theme} />
             </SlidingPanel>
         </>
-
     );
 };

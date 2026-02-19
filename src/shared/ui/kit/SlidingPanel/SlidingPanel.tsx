@@ -1,5 +1,5 @@
-import { motion, AnimatePresence,type Variants } from 'framer-motion';
-import {type ReactNode, useEffect, useState} from "react"
+import {motion, AnimatePresence, type Variants} from 'framer-motion';
+import {type ReactNode, useEffect, useState} from "react";
 
 type PanelSide = 'left' | 'right';
 
@@ -26,23 +26,21 @@ export const SlidingPanel = ({
                                  children,
                                  className
                              }: SlidingPanelProps) => {
-    // Состояние для фиксации Y в момент схлопывания
     const [targetY, setTargetY] = useState<string | number>('15vh');
-
     useEffect(() => {
         if (isCollapsed) {
-            // const savedY = localStorage.getItem('panel-y');
-            const savedY=700;
-            setTargetY(savedY ? `${savedY}px` : '15vh');
+            const savedY = 700; // Твоя заглушка
+            setTargetY(`${savedY}px`);
         } else {
-            // Когда развертываемся — возвращаемся к стандарту
             setTargetY('15vh');
         }
-    }, [isCollapsed]); // Следим только за этим флагом
+    }, [isCollapsed]);
 
     const variants: Variants = {
         hidden: {
-            x: side === 'right' ? '100%' : '-100%',
+            // x: side === 'right' ? `calc(100% + ${offset})` : `calc(-100% - ${offset})`,
+            x: side === 'right' ? `100% ` : `-100% `,
+
             opacity: 0
         },
         visible: {
@@ -51,7 +49,17 @@ export const SlidingPanel = ({
             width: isCollapsed ? collapsedWidth : fullWidth,
             height: isCollapsed ? collapsedHeight : fullHeight,
             top: targetY,
-            transition: { type: 'spring', stiffness: 90, damping: 12 }
+            // Здесь мы настраиваем "вход" и "схлопывание"
+            transition: {
+                type: 'spring',
+                stiffness: 40,
+                damping: 12,
+            }
+        },
+        exit: {
+            x: side === 'right' ? `100% ` : `-100% `,
+            opacity: 0,
+            transition: {duration: 1, ease: "easeInOut"}
         }
     };
 
@@ -63,7 +71,7 @@ export const SlidingPanel = ({
                     variants={variants}
                     initial="hidden"
                     animate="visible"
-                    exit="hidden"
+                    exit="exit"
                     className={className}
                     style={{
                         position: 'fixed',
@@ -75,9 +83,9 @@ export const SlidingPanel = ({
                     }}
                 >
                     <motion.div
-                        animate={{ opacity: isCollapsed ? 0 : 1 }}
-                        transition={{ duration: 2 }}
-                        style={{ width: fullWidth, height: fullHeight }}
+                        animate={{opacity: isCollapsed ? 0 : 1}}
+                        transition={{duration: 1}}
+                        style={{width: fullWidth, height: fullHeight}}
                     >
                         {children}
                     </motion.div>

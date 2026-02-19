@@ -5,7 +5,7 @@ import {type ThemeVariables} from "../model/types.ts";
 
 const STORAGE_PREFIX = 'custom_theme_vars_';
 
-export const useThemeEditor = (theme: Theme) => {
+export const useThemeEditor = (theme: string) => {
     const getInitialVars = useCallback((t: Theme) => {
         const saved = localStorage.getItem(`${STORAGE_PREFIX}${t}`);
         return saved ? JSON.parse(saved) : themeVarsService.get(t);
