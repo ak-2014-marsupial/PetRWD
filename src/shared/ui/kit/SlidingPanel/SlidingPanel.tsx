@@ -1,5 +1,5 @@
 import {motion, AnimatePresence, type Variants} from 'framer-motion';
-import {type ReactNode, useEffect, useState} from "react";
+import {type ReactNode} from "react";
 
 type PanelSide = 'left' | 'right';
 
@@ -12,6 +12,7 @@ interface SlidingPanelProps {
     // fullWidth?: string;
     collapsedWidth?: string;
     collapsedHeight?: string;
+    targetY: number;
 }
 
 export const SlidingPanel = ({
@@ -22,18 +23,12 @@ export const SlidingPanel = ({
                                  collapsedWidth = '10px',
                                  collapsedHeight = '10px',
                                  children,
-                                 className
+                                 className,
+                                 targetY
                              }: SlidingPanelProps) => {
-    const [targetY, setTargetY] = useState<string | number>('15vh');
-    useEffect(() => {
-        if (isCollapsed) {
-            const savedY = 700; // Твоя заглушка
-            setTargetY(`${savedY}px`);
-        } else {
-            setTargetY('15vh');
-        }
-    }, [isCollapsed]);
 
+
+    const topPosition = isCollapsed ? `${targetY}px` : '15vh';
     const variants: Variants = {
         hidden: {
             // x: side === 'right' ? `calc(100% + ${offset})` : `calc(-100% - ${offset})`,
@@ -46,7 +41,7 @@ export const SlidingPanel = ({
             opacity: 1,
             width: isCollapsed ? collapsedWidth : "auto",
             height: isCollapsed ? collapsedHeight : "auto",
-            top: targetY,
+            top: topPosition,
             // Здесь мы настраиваем "вход" и "схлопывание"
             transition: {
                 type: 'spring',
