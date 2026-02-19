@@ -2,7 +2,7 @@ import {Button, Slider, SlidingPanel, withDraggable} from '@/shared/ui';
 import {useThemeDrawer} from "@/features/ThemeSettings/lib/useThemeDrawer.ts";
 
 import css from "./ThemeSettings.Drawer.module.css";
-import {useTheme} from "@/shared/lib";
+import {type Theme, useTheme} from "@/shared/lib";
 import {useThemeEditor} from "@/features/ThemeSettings/lib/useThemeEditor.ts";
 import {FIELDS} from "@/features/ThemeSettings/model/config.ts";
 
@@ -17,13 +17,13 @@ const FloatingTrigger = withDraggable(({onClick}: { onClick: () => void }) => (
 
 
 
-const DrawerContent = ({ theme }: { theme: string }) => {
+const DrawerContent = ({ theme }: { theme: Theme }) => {
     const {vars, setFieldValue, save, reset} = useThemeEditor(theme);
 
     return (
         <>
             <div className={css.content}>
-                <h3>Налаштування ({theme})</h3>
+
                 {FIELDS.map((field) => (
                     <Slider
                         key={field.id}
@@ -33,7 +33,7 @@ const DrawerContent = ({ theme }: { theme: string }) => {
                     />
                 ))}
             </div>
-            <div className={css.buttons}>
+            <div className={css.footer}>
                 <Button onClick={save}>Зберегти</Button>
                 <Button onClick={reset}>Очистити</Button>
             </div>
@@ -53,11 +53,11 @@ export const ThemeSettingsDrawer = () => {
                 isOpen={isOpen}
                 isCollapsed={isCollapsed}
                 side="right"
-                fullWidth="20rem"
                 collapsedWidth="10px"
-                className={css.window}
+                className={css.container}
             >
                 <div className={css.header}>
+                    <h5>Налаштування ({theme})</h5>
                     <Button onClick={toggleCollapsed}>Collapse</Button>
                 </div>
                 <DrawerContent key={theme} theme={theme} />

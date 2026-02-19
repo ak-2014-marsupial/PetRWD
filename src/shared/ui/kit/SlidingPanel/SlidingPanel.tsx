@@ -9,8 +9,7 @@ interface SlidingPanelProps {
     side?: PanelSide;
     children: ReactNode;
     className?: string;
-    fullWidth?: string;
-    fullHeight?: string;
+    // fullWidth?: string;
     collapsedWidth?: string;
     collapsedHeight?: string;
 }
@@ -19,8 +18,7 @@ export const SlidingPanel = ({
                                  isOpen,
                                  isCollapsed,
                                  side = 'right',
-                                 fullWidth = '450px',
-                                 fullHeight = '70vh',
+                                 // fullWidth = '450px',
                                  collapsedWidth = '10px',
                                  collapsedHeight = '10px',
                                  children,
@@ -46,8 +44,8 @@ export const SlidingPanel = ({
         visible: {
             x: 0,
             opacity: 1,
-            width: isCollapsed ? collapsedWidth : fullWidth,
-            height: isCollapsed ? collapsedHeight : fullHeight,
+            width: isCollapsed ? collapsedWidth : "auto",
+            height: isCollapsed ? collapsedHeight : "auto",
             top: targetY,
             // Здесь мы настраиваем "вход" и "схлопывание"
             transition: {
@@ -78,14 +76,14 @@ export const SlidingPanel = ({
                         [side]: 0,
                         zIndex: 1000,
                         overflow: 'hidden',
-                        display: 'flex',
-                        flexDirection: 'column',
+                        // display: 'flex',
+                        // flexDirection: 'column',
                     }}
                 >
                     <motion.div
                         animate={{opacity: isCollapsed ? 0 : 1}}
                         transition={{duration: 1}}
-                        style={{width: fullWidth, height: fullHeight}}
+                        // style={{width: fullWidth, height: fullHeight}}
                     >
                         {children}
                     </motion.div>

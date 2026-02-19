@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { themeVarsService } from '@/shared/lib/theme/themeVars.ts';
-import { Theme } from '@/shared/lib';
+import { type Theme } from '@/shared/lib';
 import {type ThemeVariables} from "../model/types.ts";
 
 const STORAGE_PREFIX = 'custom_theme_vars_';
 
-export const useThemeEditor = (theme: string) => {
+export const useThemeEditor = (theme: Theme) => {
     const getInitialVars = useCallback((t: Theme) => {
         const saved = localStorage.getItem(`${STORAGE_PREFIX}${t}`);
         return saved ? JSON.parse(saved) : themeVarsService.get(t);
