@@ -29,9 +29,7 @@ export function useDraggable({
         if (!canDrag) return;
 
         const target = e.currentTarget as HTMLElement;
-        target.setPointerCapture(e.pointerId);
-
-        setIsDragging(true);
+        const pointerId = e.pointerId;
 
         const startPointerX = e.pageX;
         const startPointerY = e.pageY;
@@ -39,30 +37,54 @@ export function useDraggable({
         const startElY = currentPos.y;
 
         let latestPos = { x: startElX, y: startElY };
+        let dragStarted = false;
 
         const onPointerMove = (moveEvent: PointerEvent) => {
+            if (moveEvent.pointerId !== pointerId) return;
+
             const deltaX = moveEvent.pageX - startPointerX;
             const deltaY = moveEvent.pageY - startPointerY;
 
-            const newPos = {
-                x: axis === 'y' ? startElX : startElX + deltaX,
-                y: axis === 'x' ? startElY : startElY + deltaY,
-            };
+            // Only start dragging if the pointer has moved beyond a small threshold (3px)
+            if (!dragStarted && (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3)) {
+                dragStarted = true;
+                setIsDragging(true);
+                try {
+                    target.setPointerCapture(pointerId);
+                } catch (err) {
+                    console.warn('Failed to set pointer capture:', err);
+                }
+            }
 
-            latestPos = newPos;
-            setCurrentPos(newPos);
+            if (dragStarted) {
+                const newPos = {
+                    x: axis === 'y' ? startElX : startElX + deltaX,
+                    y: axis === 'x' ? startElY : startElY + deltaY,
+                };
+
+                latestPos = newPos;
+                setCurrentPos(newPos);
+            }
         };
 
         const onPointerUp = (upEvent: PointerEvent) => {
-            target.releasePointerCapture(upEvent.pointerId);
+            if (upEvent.pointerId !== pointerId) return;
+
+            if (dragStarted) {
+                try {
+                    target.releasePointerCapture(pointerId);
+                } catch (err) {
+                    // Ignore errors if capture was already released or not set
+                }
+                setIsDragging(false);
+
+                if (onDragEnd) {
+                    onDragEnd(latestPos);
+                }
+            }
+
             document.removeEventListener('pointermove', onPointerMove);
             document.removeEventListener('pointerup', onPointerUp);
-
-            setIsDragging(false);
-
-            if (onDragEnd) {
-                onDragEnd(latestPos);
-            }
         };
 
         document.addEventListener('pointermove', onPointerMove);
