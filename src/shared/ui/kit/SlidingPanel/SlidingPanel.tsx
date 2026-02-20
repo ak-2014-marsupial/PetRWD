@@ -20,8 +20,8 @@ export const SlidingPanel = ({
                                  isCollapsed,
                                  side = 'right',
                                  // fullWidth = '450px',
-                                 collapsedWidth = '10px',
-                                 collapsedHeight = '10px',
+                                 collapsedWidth = '1px',
+                                 collapsedHeight = '1px',
                                  children,
                                  className,
                                  targetY
@@ -38,7 +38,7 @@ export const SlidingPanel = ({
         },
         visible: {
             x: 0,
-            opacity: 1,
+            opacity: isCollapsed ? 0 : 1,
             width: isCollapsed ? collapsedWidth : "auto",
             height: isCollapsed ? collapsedHeight : "auto",
             top: topPosition,

@@ -1,5 +1,6 @@
 import React, { type CSSProperties } from 'react';
 import { useDraggable, type Position, type DraggableAxis } from '@/shared/lib';
+import { motion, type HTMLMotionProps } from 'framer-motion';
 
 export type DraggableProps = {
     /** If true, the component can be dragged. Defaults to false. */
@@ -12,7 +13,7 @@ export type DraggableProps = {
     axis?: DraggableAxis;
     /** Defines a fixed position relative to the parent for one or more sides. */
     pinPosition?: { left?: number; right?: number; top?: number; bottom?: number; };
-};
+} & HTMLMotionProps<'div'>;
 
 export function withDraggable<T extends object>(Component: React.ComponentType<T>) {
     return (props: T & DraggableProps) => {
@@ -22,6 +23,10 @@ export function withDraggable<T extends object>(Component: React.ComponentType<T
             onDragEnd,
             axis = 'both',
             pinPosition,
+            initial,
+            animate,
+            exit,
+            transition,
             ...restProps
         } = props;
 
@@ -52,9 +57,16 @@ export function withDraggable<T extends object>(Component: React.ComponentType<T
         };
 
         return (
-            <div onPointerDown={handlePointerDown} style={style}>
+            <motion.div
+                onPointerDown={handlePointerDown}
+                style={style}
+                initial={initial}
+                animate={animate}
+                exit={exit}
+                transition={transition}
+            >
                 <Component {...(restProps as T)} />
-            </div>
+            </motion.div>
         );
     };
 }

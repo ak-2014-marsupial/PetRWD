@@ -1,15 +1,16 @@
-import {Button, Slider, SlidingPanel, withDraggable} from '@/shared/ui';
+import {Button, ScaleIn, Slider, SlidingPanel, withDraggable} from '@/shared/ui';
 import {useThemeDrawer} from "@/features/ThemeSettings/lib/useThemeDrawer.ts";
 
 import css from "./ThemeSettings.Drawer.module.css";
 import {type Theme, useTheme} from "@/shared/lib";
 import {useThemeEditor} from "@/features/ThemeSettings/lib/useThemeEditor.ts";
 import {FIELDS} from "@/features/ThemeSettings/model/config.ts";
-import { useState} from "react";
+import {useState} from "react";
+import {AnimatePresence} from "framer-motion";
 
 const STORAGE_KEY = 'theme-drawer-position';
 
-const FloatingTrigger = withDraggable((props: { onClick: () => void }) => (
+const DraggableButton = withDraggable((props: { onClick: () => void }) => (
     <button
         onClick={props.onClick}
         style={{width: 50, height: 50, borderRadius: '50%', background: '#007bff', color: 'white', border: 'none'}}
@@ -18,7 +19,36 @@ const FloatingTrigger = withDraggable((props: { onClick: () => void }) => (
     </button>
 ));
 
-const DrawerContent = ({ theme }: { theme: Theme }) => {
+const FloatingTrigger = (props: {
+    isOpen: boolean;
+    isCollapsed: boolean;
+    onClick: () => void;
+    position: { x: number; y: number };
+    onDragEnd: (pos: { x: number; y: number }) => void;
+}) => {
+    const {isOpen, isCollapsed, onClick, position, onDragEnd} = props;
+
+    return (
+        <AnimatePresence>
+            {isOpen && isCollapsed && (
+                <DraggableButton
+                    initial={{opacity: 0, scale: 0.5}}
+                    animate={{opacity: 1, scale: 1}}
+                    exit={{opacity: 0, scale: 0.5}}
+                    transition={{duration: 0.3, ease: 'easeOut'}}
+                    canDrag={true}
+                    onClick={onClick}
+                    position={position}
+                    onDragEnd={onDragEnd}
+                    axis="y"
+                    pinPosition={{right: 20}}
+                />
+            )}
+        </AnimatePresence>
+    );
+};
+
+const DrawerContent = ({theme}: { theme: Theme }) => {
     const {vars, setFieldValue, save, reset} = useThemeEditor(theme);
 
     return (
@@ -45,6 +75,8 @@ const DrawerContent = ({ theme }: { theme: Theme }) => {
 export const ThemeSettingsDrawer = () => {
     const {isOpen, toggleCollapsed, isCollapsed} = useThemeDrawer();
     const {theme} = useTheme();
+    const positionDefault = {x: 200, y: 400}
+
 
     const getInitialPosition = () => {
         const saved = localStorage.getItem(STORAGE_KEY);
@@ -55,7 +87,7 @@ export const ThemeSettingsDrawer = () => {
                 console.error("Failed to parse saved position from localStorage", e);
             }
         }
-        return { x: window.innerWidth - 100, y: 700 }; // Default position
+        return {x: window.innerWidth - positionDefault.x, y: positionDefault.y}; // Default position
     };
 
     const [position, setPosition] = useState<{ x: number, y: number }>(getInitialPosition);
@@ -67,22 +99,19 @@ export const ThemeSettingsDrawer = () => {
 
     return (
         <>
-            {isOpen && isCollapsed && (
-                <FloatingTrigger
-                    canDrag={true}
-                    onClick={toggleCollapsed}
-                    position={position}
-                    onDragEnd={handleDragEnd}
-                    axis="y" // Only allow vertical dragging
-                    pinPosition={{ right: 20 }} // Pin to the right edge
-                />
-            )}
+            <FloatingTrigger
+                isOpen={isOpen}
+                isCollapsed={isCollapsed}
+                onClick={toggleCollapsed}
+                position={position}
+                onDragEnd={handleDragEnd}
+            />
 
             <SlidingPanel
                 isOpen={isOpen}
                 isCollapsed={isCollapsed}
                 side="right"
-                collapsedWidth="10px"
+                collapsedWidth="1px"
                 className={css.container}
                 targetY={position.y}
             >
@@ -91,7 +120,7 @@ export const ThemeSettingsDrawer = () => {
                     <h5>Налаштування ({theme})</h5>
                     <Button onClick={toggleCollapsed}>Collapse</Button>
                 </div>
-                <DrawerContent key={theme} theme={theme} />
+                <DrawerContent key={theme} theme={theme}/>
             </SlidingPanel>
         </>
     );

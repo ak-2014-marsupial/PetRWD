@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, type PointerEvent as ReactPointerEvent } from 'react';
+import {useState, useEffect, useCallback, type PointerEvent as ReactPointerEvent} from 'react';
 
 export type Position = { x: number; y: number };
 
@@ -12,13 +12,14 @@ export interface UseDraggableOptions {
 }
 
 export function useDraggable({
-    canDrag = false,
-    initialPosition = { x: 0, y: 0 },
-    axis = 'both',
-    onDragEnd,
-}: UseDraggableOptions = {}) {
+                                 canDrag = false,
+                                 initialPosition = {x: 0, y: 0},
+                                 axis = 'both',
+                                 onDragEnd,
+                             }: UseDraggableOptions = {}) {
     const [currentPos, setCurrentPos] = useState<Position>(initialPosition);
     const [isDragging, setIsDragging] = useState(false);
+    const threshold = 3 //3px
 
     // Sync state if initialPosition changes
     useEffect(() => {
@@ -36,7 +37,7 @@ export function useDraggable({
         const startElX = currentPos.x;
         const startElY = currentPos.y;
 
-        let latestPos = { x: startElX, y: startElY };
+        let latestPos = {x: startElX, y: startElY};
         let dragStarted = false;
 
         const onPointerMove = (moveEvent: PointerEvent) => {
@@ -46,7 +47,7 @@ export function useDraggable({
             const deltaY = moveEvent.pageY - startPointerY;
 
             // Only start dragging if the pointer has moved beyond a small threshold (3px)
-            if (!dragStarted && (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3)) {
+            if (!dragStarted && (Math.abs(deltaX) > threshold || Math.abs(deltaY) > threshold)) {
                 dragStarted = true;
                 setIsDragging(true);
                 try {
