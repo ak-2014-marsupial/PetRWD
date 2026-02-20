@@ -1,6 +1,5 @@
 import React, { type CSSProperties } from 'react';
 import { useDraggable, type Position, type DraggableAxis } from '@/shared/lib';
-import { motion, type HTMLMotionProps } from 'framer-motion';
 
 export type DraggableProps = {
     /** If true, the component can be dragged. Defaults to false. */
@@ -13,7 +12,8 @@ export type DraggableProps = {
     axis?: DraggableAxis;
     /** Defines a fixed position relative to the parent for one or more sides. */
     pinPosition?: { left?: number; right?: number; top?: number; bottom?: number; };
-} & HTMLMotionProps<'div'>;
+    className?: string;
+};
 
 export function withDraggable<T extends object>(Component: React.ComponentType<T>) {
     return (props: T & DraggableProps) => {
@@ -23,10 +23,7 @@ export function withDraggable<T extends object>(Component: React.ComponentType<T
             onDragEnd,
             axis = 'both',
             pinPosition,
-            initial,
-            animate,
-            exit,
-            transition,
+            className,
             ...restProps
         } = props;
 
@@ -37,36 +34,40 @@ export function withDraggable<T extends object>(Component: React.ComponentType<T
             onDragEnd,
         });
 
+        // "Polite" styles: only set what's strictly necessary for dynamic positioning
         const style: CSSProperties = {
             position: 'fixed',
             zIndex: 1000,
-            cursor: canDrag ? (isDragging ? 'grabbing' : 'grab') : 'default',
-            touchAction: 'none', // Prevent scrolling on touch devices during dragging
+            touchAction: 'none',
             left: currentDragPos.x,
             top: currentDragPos.y,
-            opacity: isDragging ? 0.8 : 1,
-            transition: isDragging ? 'none' : 'opacity 0.2s',
+            cursor: canDrag ? (isDragging ? 'grabbing' : 'grab') : 'default',
+            
+            // Only override opacity during active dragging
+            ...(isDragging && { 
+                opacity: 0.8,
+                transition: 'none' // Disable transitions while dragging for performance
+            }),
+
             // Apply overrides based on pinPosition
             ...(axis === 'y' && pinPosition?.left !== undefined && { left: pinPosition.left }),
             ...(axis === 'y' && pinPosition?.right !== undefined && { right: pinPosition.right, left: 'auto' }),
             ...(axis === 'x' && pinPosition?.top !== undefined && { top: pinPosition.top }),
             ...(axis === 'x' && pinPosition?.bottom !== undefined && { bottom: pinPosition.bottom, top: 'auto' }),
-            // Ensure no conflicting properties for right/bottom when left/top are set by pos
+            
+            // Ensure no conflicting properties
             ...(axis === 'y' && pinPosition?.right === undefined && { right: 'auto' }),
             ...(axis === 'x' && pinPosition?.bottom === undefined && { bottom: 'auto' }),
         };
 
         return (
-            <motion.div
-                onPointerDown={handlePointerDown}
-                style={style}
-                initial={initial}
-                animate={animate}
-                exit={exit}
-                transition={transition}
+            <div 
+                onPointerDown={handlePointerDown} 
+                style={style} 
+                className={className}
             >
                 <Component {...(restProps as T)} />
-            </motion.div>
+            </div>
         );
     };
 }

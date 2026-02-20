@@ -3,11 +3,43 @@
     padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
+
+    /* Firefox support - must be on the element itself or * */
+    scrollbar-width: thin;
+    scrollbar-color: var(--layer-1-accent) transparent;
 }
 
 body {
-    /*transition: background-color var(--transition-speed), color var(--transition-speed);*/
     margin: 0;
     padding: 0;
     font-size: 1rem;
+    min-height: 100vh;
+}
+
+/* --- CUSTOM SCROLLBARS (Webkit: Chrome, Safari, Edge) --- */
+/* Ставимо на всі елементи через ::-webkit-scrollbar */
+
+::-webkit-scrollbar {
+    width: 10px !important;
+    height: 10px !important;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--layer-1-border) !important;
+    border-radius: 20px !important;
+    border: 3px solid transparent !important; /* Створює відступ навколо повзунка */
+    background-clip: content-box !important; /* Щоб бордер спрацював як відступ */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--layer-1-accent) !important;
+}
+
+/* Спеціально для темної теми, якщо змінні ще не прокинулись */
+.app_dark_theme {
+    scrollbar-color: var(--layer-1-accent) #1a1a1a;
 }
