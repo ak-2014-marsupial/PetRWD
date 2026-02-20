@@ -1,4 +1,4 @@
-import { AppRouter } from './providers/router';
+import { AppRouter } from '@/app/providers';
 import { fontSizeService, themeService } from '@/shared/lib';
 import { themeSettingsService } from '@/features/ThemeSettings';
 import '@/app/styles/index.css';
