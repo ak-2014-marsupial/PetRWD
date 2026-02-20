@@ -25,7 +25,7 @@ export function withDraggable<T extends object>(Component: React.ComponentType<T
             ...restProps
         } = props;
 
-        const { position: currentDragPos, handleMouseDown } = useDraggable({
+        const { position: currentDragPos, handlePointerDown, isDragging } = useDraggable({
             canDrag,
             initialPosition: position,
             axis,
@@ -35,9 +35,12 @@ export function withDraggable<T extends object>(Component: React.ComponentType<T
         const style: CSSProperties = {
             position: 'fixed',
             zIndex: 1000,
-            cursor: canDrag ? 'grab' : 'default',
+            cursor: canDrag ? (isDragging ? 'grabbing' : 'grab') : 'default',
+            touchAction: 'none', // Prevent scrolling on touch devices during dragging
             left: currentDragPos.x,
             top: currentDragPos.y,
+            opacity: isDragging ? 0.8 : 1,
+            transition: isDragging ? 'none' : 'opacity 0.2s',
             // Apply overrides based on pinPosition
             ...(axis === 'y' && pinPosition?.left !== undefined && { left: pinPosition.left }),
             ...(axis === 'y' && pinPosition?.right !== undefined && { right: pinPosition.right, left: 'auto' }),
@@ -49,7 +52,7 @@ export function withDraggable<T extends object>(Component: React.ComponentType<T
         };
 
         return (
-            <div onMouseDown={handleMouseDown} style={style}>
+            <div onPointerDown={handlePointerDown} style={style}>
                 <Component {...(restProps as T)} />
             </div>
         );

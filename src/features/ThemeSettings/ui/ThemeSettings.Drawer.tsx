@@ -67,7 +67,7 @@ export const ThemeSettingsDrawer = () => {
 
     return (
         <>
-            {isCollapsed && (
+            {isOpen && isCollapsed && (
                 <FloatingTrigger
                     canDrag={true}
                     onClick={toggleCollapsed}
