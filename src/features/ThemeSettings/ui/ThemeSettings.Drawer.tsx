@@ -1,13 +1,12 @@
-import {Button, InputRange, SlidingPanel, withDraggable} from '@/shared/ui';
+import {Button, SlidingPanel, withDraggable} from '@/shared/ui';
 import {useThemeDrawer} from "@/features/ThemeSettings/lib/useThemeDrawer.ts";
 
 import css from "./ThemeSettings.Drawer.module.css";
-import {type Theme, useTheme} from "@/shared/lib";
-import {useThemeEditor} from "@/features/ThemeSettings/lib/useThemeEditor.ts";
-import {FIELDS} from "@/features/ThemeSettings/model/config.ts";
+import {useTheme} from "@/shared/lib";
 import {useState} from "react";
 import {GiSettingsKnobs} from "react-icons/gi";
-import { BsArrowsCollapse } from "react-icons/bs";
+import {BsArrowsCollapse} from "react-icons/bs";
+import {ThemeSettingsForm} from "@/features/ThemeSettings/ui/ThemeSettings.Form.tsx";
 
 const STORAGE_KEY = 'theme-drawer-position';
 
@@ -43,33 +42,12 @@ const FloatingTrigger = (props: {
     );
 };
 
-const DrawerContent = ({theme}: { theme: Theme }) => {
-    const {vars, setFieldValue, save, reset} = useThemeEditor(theme);
-
-    return (
-        <>
-            <div className={css.content}>
-                {FIELDS.map((field) => (
-                    <InputRange
-                        key={field.id}
-                        {...field}
-                        value={vars[field.id]}
-                        onChange={setFieldValue}
-                    />
-                ))}
-            </div>
-            <div className={css.footer}>
-                <Button onClick={save}>Зберегти</Button>
-                <Button onClick={reset}>Очистити</Button>
-            </div>
-        </>
-    );
-};
 
 export const ThemeSettingsDrawer = () => {
     const {isOpen, toggleCollapsed, isCollapsed} = useThemeDrawer();
     const {theme} = useTheme();
-    const positionDefault = {x: 200, y: 400}
+    const positionDefault = {x: 200, y: 400};
+    const headerSlot = <Button onClick={toggleCollapsed}><BsArrowsCollapse/></Button>;
 
     const getInitialPosition = () => {
         const saved = localStorage.getItem(STORAGE_KEY);
@@ -108,11 +86,7 @@ export const ThemeSettingsDrawer = () => {
                 className={css.container}
                 targetY={position.y}
             >
-                <div className={css.header}>
-                    <Button onClick={toggleCollapsed}><BsArrowsCollapse/></Button>
-                    <h5>Налаштування ({theme})</h5>
-                </div>
-                <DrawerContent key={theme} theme={theme}/>
+                <ThemeSettingsForm key={theme} theme={theme} headerSlot={headerSlot}/>
             </SlidingPanel>
         </>
     );
