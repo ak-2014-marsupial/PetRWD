@@ -17,6 +17,11 @@ const notify = () => {
 };
 
 export const notificationService = {
+    init() {
+        notifications = [];
+        notify();
+    },
+
     subscribe(listener: Listener) {
         listeners.add(listener);
         // Одразу віддаємо поточний стан при підписці

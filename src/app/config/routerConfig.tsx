@@ -3,7 +3,7 @@ import {DocViewer,FontSizePicker, ThemeToggle, ThemeSettingsToggle} from '@/feat
 
 import {
     FaHome, FaInfoCircle, FaPalette,
-     FaRoute, FaAdjust
+     FaRoute, FaAdjust, FaBell
 } from 'react-icons/fa';
 import {RxFontSize} from "react-icons/rx";
 import {GiSettingsKnobs} from "react-icons/gi";
@@ -17,6 +17,7 @@ const docPages = [
     {name: 'colors', label: 'Colors', icon: <FaPalette/>},
     {name: 'routing', label: 'Routing', icon: <FaRoute/>},
     {name: 'theme', label: 'Theming', icon: <FaAdjust/>},
+    {name: 'notifications', label: 'Notifications', icon: <FaBell/>},
 ];
 
 const docRoutes: AppRoute[] = docPages.map(doc => ({
