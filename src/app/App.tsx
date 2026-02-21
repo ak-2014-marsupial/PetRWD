@@ -4,6 +4,7 @@ import { themeSettingsService } from '@/features/ThemeSettings';
 import '@/app/styles/index.css';
 import '@/app/styles/variables.css';
 import { HashRouter } from 'react-router-dom';
+import {NotificationContainer} from "@/shared/ui";
 
 export const App = () => {
     fontSizeService.init();
@@ -12,6 +13,7 @@ export const App = () => {
     return (
         <HashRouter>
             <AppRouter />
+            <NotificationContainer />
         </HashRouter>
     );
 };

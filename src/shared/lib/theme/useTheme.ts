@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {themeService, type Theme} from "./theme.ts";
+import {notificationService} from "@/shared/lib";
 
 interface IUseTheme {
     toggleTheme: () => void;
@@ -16,6 +17,7 @@ export const useTheme = (): IUseTheme => {
 
     const toggleTheme = () => {
         themeService.toggle();
+        notificationService.success(`Тему змінено на ${themeService.get() === 'app_light_theme' ? 'світлу' : 'темну'}`);
     }
 
     return {
