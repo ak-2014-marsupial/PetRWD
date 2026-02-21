@@ -1,4 +1,4 @@
-import {Button, Slider, SlidingPanel, withDraggable} from '@/shared/ui';
+import {Button, InputRange, SlidingPanel, withDraggable} from '@/shared/ui';
 import {useThemeDrawer} from "@/features/ThemeSettings/lib/useThemeDrawer.ts";
 
 import css from "./ThemeSettings.Drawer.module.css";
@@ -50,7 +50,7 @@ const DrawerContent = ({theme}: { theme: Theme }) => {
         <>
             <div className={css.content}>
                 {FIELDS.map((field) => (
-                    <Slider
+                    <InputRange
                         key={field.id}
                         {...field}
                         value={vars[field.id]}

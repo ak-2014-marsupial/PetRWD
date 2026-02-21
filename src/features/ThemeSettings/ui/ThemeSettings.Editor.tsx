@@ -1,7 +1,7 @@
 import {type FC} from 'react';
 import {useTheme} from '@/shared/lib/theme/useTheme.ts';
 import {useThemeEditor} from "../lib/useThemeEditor.ts";
-import {Slider, Button} from '@/shared/ui';
+import {InputRange, Button} from '@/shared/ui';
 import {FIELDS} from "../model/config.ts"
 import css from './ThemeSettings.Editor.module.css';
 
@@ -14,7 +14,7 @@ export const ThemeSettingsEditor: FC = () => {
             <h3>Налаштування ({theme})</h3>
 
             {FIELDS.map((field) => (
-                <Slider
+                <InputRange
                     key={field.id}
                     {...field}
                     value={vars[field.id]}

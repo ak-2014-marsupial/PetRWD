@@ -1,10 +1,10 @@
 /*********** Baseline, reset styles ***********/
 /*https://range-input-css.netlify.app/*/
-.slider {
+.InputRange {
     color: var(--layer-3-text, yellow)
 }
 
-.slider input {
+.InputRange input {
     --tomb-color: var(--layer-3-accent, #007bff);
     --track-color: var(--layer-3-active, #ddd);
     -webkit-appearance: none;
@@ -15,20 +15,20 @@
 }
 
 /* Removes default focus */
-.slider input:focus {
+.InputRange input:focus {
     outline: none;
 }
 
 /******** Chrome, Safari, Opera and Edge Chromium styles ********/
 /* slider track */
-.slider input::-webkit-slider-runnable-track {
+.InputRange input::-webkit-slider-runnable-track {
     background-color: var(--track-color);
     border-radius: 0.5rem;
     height: 0.5rem;
 }
 
 /* slider thumb */
-.slider input::-webkit-slider-thumb {
+.InputRange input::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
     margin-top: -4px; /* Centers thumb on the track */
@@ -38,21 +38,21 @@
     width: 1rem;
 }
 
-.slider input:focus::-webkit-slider-thumb {
+.InputRange input:focus::-webkit-slider-thumb {
     outline: 3px solid var(--tomb-color);
     outline-offset: 0.125rem;
 }
 
 /*********** Firefox styles ***********/
 /* slider track */
-.slider input::-moz-range-track {
+.InputRange input::-moz-range-track {
     background-color: var(--track-color);
     border-radius: 0.5rem;
     height: 0.5rem;
 }
 
 /* slider thumb */
-.slider input::-moz-range-thumb {
+.InputRange input::-moz-range-thumb {
     background-color: var(--tomb-color);
     border: none; /*Removes extra border that FF applies*/
     border-radius: 0.5rem;
@@ -60,7 +60,7 @@
     width: 1rem;
 }
 
-.slider input:focus::-moz-range-thumb {
+.InputRange input:focus::-moz-range-thumb {
     outline: 3px solid var(--tomb-color);
     outline-offset: 0.125rem;
 }

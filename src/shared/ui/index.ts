@@ -1,4 +1,4 @@
-export * from "./kit/Slider";
+export * from "./kit/InputRange";
 export * from "./kit/Button";
 export * from "./kit/Toggle";
 export * from "./kit/HOC";
