@@ -4,7 +4,7 @@ import {AppShell, Footer, Header, Sidebar} from '@/widgets/app-shell';
 import {ThemeSwitcher} from '@/features';
 
 import {ThemeSettingsDrawer} from "@/features"
-// import {useMemo} from 'react';
+import {type ReactNode} from 'react';
 
 const ActionSlot = () => {
     return (
@@ -52,9 +52,16 @@ export const AppRouter = () => {
                     />
                 }
             >
-                {routerConfig.map(({element, path}) => (
-                    <Route key={path} path={path} element={element}/>
-                ))}
+                {routerConfig
+                    .filter(route => route.path)
+                    .map(({element, path}) => (
+                        <Route 
+                            key={path} 
+                            path={path} 
+                            element={element as ReactNode}
+                        />
+                    ))
+                }
             </Route>
         </Routes>
     );

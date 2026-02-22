@@ -19,7 +19,7 @@ export interface AppRoute {
     type: RouteTypeValues;
     isNav: boolean;
     section: 'main' | 'settings';
-    element: ReactNode;
+    element: ReactNode | ((props: { label?: string }) => ReactNode);
     path?: string;
     label?: string;
     icon?: ReactNode;

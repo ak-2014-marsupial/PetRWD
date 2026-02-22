@@ -26,11 +26,15 @@ export const Sidebar = ({navItems}: SidebarProps) => {
                 </li>
             )
         } else if (item.type === RouteType.COMPONENT) {
+            const component = typeof item.element === 'function'
+                ? item.element({ label: item.label })
+                : item.element;
+
             return (
                 <li key={item.id}>
                     <div className={css.row}>
                         <span className={css.icon}>{item.icon}</span>
-                        {item.element}
+                        {component}
                     </div>
                 </li>
             )

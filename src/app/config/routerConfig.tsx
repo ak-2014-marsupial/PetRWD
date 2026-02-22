@@ -1,13 +1,13 @@
 import {HomePage, NotFoundPage, ThemeSettingsPage} from '@/pages';
-import {DocViewer,FontSizePicker, ThemeToggle, ThemeSettingsToggle} from '@/features';
+import {DocViewer, FontSizePicker, ThemeToggle, ThemeSettingsToggle} from '@/features';
 
 import {
     FaHome, FaInfoCircle, FaPalette,
-     FaRoute, FaAdjust, FaBell
+    FaRoute, FaAdjust, FaBell
 } from 'react-icons/fa';
 import {RxFontSize} from "react-icons/rx";
 import {GiSettingsKnobs} from "react-icons/gi";
-import { MdDarkMode } from "react-icons/md";
+import {MdDarkMode} from "react-icons/md";
 
 import {type AppRoute, AppRoutes, RouteType} from './routerConfig.types.ts';
 
@@ -68,7 +68,7 @@ export const routerConfig: AppRoute[] = [
     },
     {
         id: 'theme-toggle',
-        element: <ThemeToggle/>,
+        element: ({label}) => <ThemeToggle label={label}/>,
         type: RouteType.COMPONENT,
         isNav: false,
         section: 'settings',
@@ -77,7 +77,7 @@ export const routerConfig: AppRoute[] = [
     },
     {
         id: 'theme-color-editor-toggle',
-        element: <ThemeSettingsToggle/>,
+        element: ({label}) => <ThemeSettingsToggle label={label}/>,
         type: RouteType.COMPONENT,
         isNav: false,
         section: 'settings',

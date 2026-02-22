@@ -1,84 +1,75 @@
-# Детальна Реалізація Маршрутизації
+# Система Маршрутизації та Навігації
 
-Цей документ описує, як влаштована система маршрутизації (роутингу) та навігації в проєкті.
+Цей документ описує оновлену систему маршрутизації, яка є "єдиним джерелом правди" як для сторінок (Routes), так і для елементів інтерфейсу в сайдбарі.
 
-## Основний Принцип: Єдине Джерело Правди
+## Основна Концепція
 
-Ключова ідея полягає в тому, щоб мати єдиний конфігураційний файл, який визначає всі доступні маршрути в додатку. Цей файл є "єдиним джерелом правди" для всього, що пов'язано з навігацією.
+Конфігурація маршрутів знаходиться в `src/app/config/routerConfig.tsx`. Вона визначає не тільки шлях (URL) і компонент сторінки, але й метадані для побудови навігації: іконки, назви, секції та типи відображення.
 
-Таким файлом є `src/app/config/routerConfig.tsx`.
+## Типи Маршрутів (`RouteType`)
 
-## Структура `routerConfig.tsx`
+В системі розділені два основні типи елементів:
+- **`LINK`**: Класичний маршрут з `path`. Він реєструється в `AppRouter` і відображається як посилання в сайдбарі.
+- **`COMPONENT`**: Спеціальний елемент (наприклад, перемикач теми або вибір розміру шрифту), який відображається в сайдбарі, але не має власного URL-шляху.
 
-Файл експортує об'єкт, де ключами є назви маршрутів (у форматі `enum`), а значеннями — об'єкти, що описують кожен маршрут.
+## Структура `AppRoute`
 
-**Приклад об'єкта маршруту:**
+Кожен об'єкт маршруту має наступні властивості:
 ```typescript
-import { RouteProps } from 'react-router-dom';
-import { HomePage } from '@/pages/home';
-import { DocPage } from '@/pages/Doc';
-
-export enum AppRoutes {
-    HOME = 'home',
-    ABOUT = 'about',
+export interface AppRoute {
+    id: string;               // Унікальний ідентифікатор
+    type: RouteTypeValues;    // LINK або COMPONENT
+    isNav: boolean;           // Чи відображати як основне посилання (NavLink)
+    section: 'main' | 'settings'; // Секція в сайдбарі для групування
+    element: ReactNode | ((props: { label?: string }) => ReactNode); // Компонент або функція-рендерер
+    path?: string;            // URL-шлях (обов'язково для LINK)
+    label?: string;           // Текст для відображення
+    icon?: ReactNode;         // Іконка
 }
-
-export const RoutePath: Record<AppRoutes, string> = {
-    [AppRoutes.HOME]: '/',
-    [AppRoutes.ABOUT]: '/Doc',
-};
-
-export const routerConfig: Record<AppRoutes, RouteProps> = {
-    [AppRoutes.HOME]: {
-        path: RoutePath.home,
-        element: <HomePage />,
-    },
-    [AppRoutes.ABOUT]: {
-        path: RoutePath.about,
-        element: <DocPage />,
-        // Можна додавати й інші властивості, наприклад, для захищених маршрутів:
-        // authOnly: true, 
-    },
-};
 ```
 
-## Використання Конфігурації
+## Функції-рендерери в `element`
 
-Цей єдиний об'єкт `routerConfig` використовується у двох ключових місцях:
-
-### 1. Генерація Маршрутів в `AppRouter`
-Компонент `AppRouter` (`src/app/providers/router/AppRouter.tsx`) імпортує `routerConfig`, ітерується по його значеннях (`Object.values(routerConfig)`) і створює відповідний набір компонентів `<Route>` з `react-router-dom`.
+Для гнучкості ми додали можливість передавати в `element` не просто готовий вузол, а функцію. Це дозволяє передавати дані з конфігурації (наприклад, `label`) безпосередньо в компонент:
 
 ```tsx
-// Усередині AppRouter.tsx
-import { Routes, Route } from 'react-router-dom';
-import { routerConfig } from '@/app/config/routerConfig';
-
-const AppRouter = () => (
-    <Routes>
-        {Object.values(routerConfig).map(({ path, element }) => (
-            <Route
-                key={path}
-                path={path}
-                element={element}
-            />
-        ))}
-    </Routes>
-);
+{
+    id: 'theme-color-editor-toggle',
+    label: "Color Editor",
+    element: ({label}) => <ThemeSettingsToggle label={label}/>,
+    type: RouteType.COMPONENT,
+    section: 'settings',
+}
 ```
-Це гарантує, що всі визначені маршрути автоматично стають доступними в додатку.
 
-### 2. Побудова Навігації в `Sidebar`
-Віджет `Sidebar` (`src/widgets/app-shell/ui/Sidebar.tsx`) також використовує `routerConfig` для динамічної побудови навігаційних посилань.
+## Як це працює
 
-Він може ітеруватися по конфігурації та рендерити компонент `<NavLink>` для кожного маршруту, який повинен бути видимим у навігації. Це виключає розсинхронізацію між фактичними маршрутами та посиланнями, що на них ведуть.
+### 1. Рендеринг Сторінок (`AppRouter`)
+`AppRouter` ітерується по `routerConfig`, фільтрує елементи, які мають `path`, і реєструє їх у стандартному компоненті `<Routes>` від `react-router-dom`.
 
-## Як Додати Нову Сторінку
+### 2. Динамічний Сайдбар (`Sidebar`)
+`Sidebar` отримує весь конфігурацію і розділяє її за `section`. При рендерингу він перевіряє `type`:
+- Якщо це `LINK` — створюється `<NavLink>`.
+- Якщо це `COMPONENT` — рендериться сам елемент (якщо це функція, вона викликається з `label`).
 
-1.  **Створіть компонент сторінки** (наприклад, `src/pages/contact/ui/ContactPage.tsx`).
-2.  **Відкрийте `routerConfig.tsx`**.
-3.  **Додайте новий запис** в `enum AppRoutes` (наприклад, `CONTACT = 'contact'`).
-4.  **Додайте шлях** в об'єкт `RoutePath` (наприклад, `[AppRoutes.CONTACT]: '/contact'`).
-5.  **Додайте новий об'єкт** в `routerConfig`, вказавши `path` та `element` для нової сторінки.
+## Динамічні Маршрути
 
-Все! Нова сторінка автоматично зареєструється в системі маршрутизації та, за відповідної логіки в `Sidebar`, з'явиться в навігації.
+Система підтримує генерацію маршрутів на основі масивів даних. Наприклад, сторінки документації генеруються автоматично:
+
+```typescript
+const docRoutes: AppRoute[] = docPages.map(doc => ({
+    id: `doc-${doc.name}`,
+    path: `/docs/${doc.name}`,
+    element: <DocViewer docName={doc.name}/>,
+    type: RouteType.LINK,
+    label: doc.label,
+    // ...інші властивості
+}));
+```
+
+## Як Додати Нову Функцію або Сторінку
+
+1.  Якщо це сторінка — створіть її в `src/pages`.
+2.  Додайте запис у `routerConfig.tsx`.
+3.  Вкажіть `type: RouteType.LINK` для сторінки або `type: RouteType.COMPONENT` для віджета в меню.
+4.  Виберіть секцію (`main` або `settings`) для правильного групування в інтерфейсі.
