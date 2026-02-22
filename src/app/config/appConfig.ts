@@ -4,10 +4,11 @@
 
 export const APP_CONFIG = {
   TRANSITION_SPEED: '1s',
-  SIDEBAR_WIDTH: '25rem',
+  SIDEBAR_WIDTH: '20rem',
+  SIDEBAR_WIDTH_MOBILE: '15rem',
   SIDEBAR_WIDTH_COLLAPSED: '5rem',
   SIDEBAR_HEIGHT: '100vh',
-  MOBILE_BREAKPOINT: '500px',
+  MOBILE_BREAKPOINT: '700px',
 
   THEME_VARS: {
     app_light_theme: {

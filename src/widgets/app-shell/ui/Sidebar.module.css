@@ -1,4 +1,5 @@
-.sidebar {
+.sidebarWrapper {
+    display: contents;
     /* Colors */
     --_sidebar-bg: var(--layer-2-bg);
     --_sidebar-text-color: var(--layer-2-text);
@@ -11,6 +12,7 @@
 
     /* Sizes (in rem, base 16px) */
     --_sidebar-width: $SIDEBAR_WIDTH;
+    --_sidebar-width-mobile: $SIDEBAR_WIDTH_MOBILE;
     --_sidebar-width-collapsed: 0;
     --_sidebar-toggler-size: 2rem;
     --_sidebar-border-radius: 0.2rem;
@@ -26,22 +28,33 @@
     /* Transitions */
     //--_sidebar-transition-duration: 0.5s;
     //--_sidebar-transition-duration: calc($TRANSITION_SPEED * 1s);
-    --_sidebar-transition-duration: $TRANSITION_SPEED;
+    --_transition-speed: $TRANSITION_SPEED;
+
+}
+
+.sidebar {
 
 
     width: var(--_sidebar-width);
     background-color: var(--_sidebar-bg);
     border-right: 1px solid var(--_sidebar-border-color);
-    /*height: 100%;*/
+    height: 100%;
     font-size: 1.2rem;
     display: flex;
     flex-direction: column;
     white-space: nowrap;
     overflow: hidden;
+    transition: transform var(--_transition-speed) ease,
+    width var(--_transition-speed) ease,
+    visibility var(--_transition-speed);
+
+    //z-index: 100;
 }
 
-.collapsed {
+.sidebar .collapsed {
     width: var(--_sidebar-width-collapsed);
+    border-right: none;
+    visibility: hidden;
 }
 
 .sidebar nav {
@@ -62,7 +75,7 @@
     padding: 0.5rem 0.7rem;
     color: var(--_sidebar-text-color);
     text-decoration: none;
-    transition: background-color var(--_sidebar-transition-duration);
+    transition: background-color var(--_transition-speed);
 }
 
 .row:hover {
@@ -82,49 +95,61 @@
 
 .MenuButton {
     position: absolute;
-    /*right: var(--_padding-xl);*/
-    right: 1.2rem;
+    right: var(--_padding-xl);
     height: var(--_sidebar-toggler-size);
     width: var(--_sidebar-toggler-size);
     border: 1px solid var(--_sidebar-border-color);
     cursor: pointer;
     display: flex;
-    //background-color: var(--layer-3-accent);
     background: var(--_sidebar-bg-accent);
     align-items: center;
     justify-content: center;
     border-radius: var(--_sidebar-border-radius);
-    transition: var(--_sidebar-transition-duration) ease;
-    //transition: 3s ease;
+    transition: var(--_transition-speed) ease;
     opacity: 0;
 }
 
 .MenuButton span {
     font-size: 1.2rem;
-    transition: var(--_sidebar-transition-duration) ease;
+    transition: var(--_transition-speed) ease;
 }
 
 
 @media (max-width: $MOBILE_BREAKPOINT) {
+    .sidebarWrapper {
+        display: block;
+    }
 
     .sidebar {
-        transition: all var(--_sidebar-transition-duration) ease;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: var(--_sidebar-width-mobile);
+        transition: all var(--_transition-speed) ease;
+        max-width: 67vw;
+        transform: translateX(0); /* Начальное положение - открыто */
+        visibility: visible;
+    }
+
+    .collapsed .sidebar {
+        width: var(--_sidebar-width);
+        //max-width: 300px;
+        transform: translateX(-100%);
+        visibility: visible;
     }
 
     .MenuButton {
         position: fixed;
-        left: var(--_padding-xl);
+        right: var(--_padding-xl);
         top: var(--_padding-xl);
         height: var(--_sidebar-menu-button-height);
         width: var(--_sidebar-menu-button-width);
         display: flex;
         color: var(--_sidebar-text-accent-color);
         opacity: 1;
+        z-index: 1000;
     }
 
-    .collapsed {
-        left: calc(var(--_sidebar-width) * -1);
-    }
 
     .collapsed .MenuButton {
         transform: none;

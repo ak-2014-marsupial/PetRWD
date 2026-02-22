@@ -46,11 +46,12 @@ export const Sidebar = ({navItems}: SidebarProps) => {
     }
 
     return (
-        <>
+        <div className={`${css.sidebarWrapper} ${isCollapsed ? css.collapsed : ''}`}>
+
             <button className={css.MenuButton} onClick={toggleCollapsed}>
                 <span className={css.icon}><MdMenu/></span>
             </button>
-            <aside className={`${css.sidebar} ${isCollapsed? css.collapsed:''}`}>
+            <aside className={css.sidebar}>
                 <nav>
                     <ul>
                         {navItems.map((item) => (
@@ -60,7 +61,7 @@ export const Sidebar = ({navItems}: SidebarProps) => {
                 </nav>
 
             </aside>
-        </>
+        </div>
     );
 };
 

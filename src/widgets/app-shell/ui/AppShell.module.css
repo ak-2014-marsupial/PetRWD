@@ -20,6 +20,9 @@
 
   background-color: var(--_content-bg);
   color: var(--_content-text-color);
-  flex-grow: 1;
+  //flex-grow: 1;
   overflow-y: auto;
+  width: 100%;
+  overflow-x: auto;
+  padding: 0.5rem;
 }
