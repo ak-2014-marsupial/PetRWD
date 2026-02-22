@@ -1,6 +1,8 @@
 import {NavLink} from 'react-router-dom';
-import styles from './Sidebar.module.css';
+import css from './Sidebar.module.css';
 import {type AppRoute, RouteType} from "@/app/config/routerConfig.types.ts";
+import {useState} from "react";
+import {MdMenu} from 'react-icons/md';
 
 interface SidebarProps {
     navItems: AppRoute[];
@@ -8,6 +10,7 @@ interface SidebarProps {
 
 export const Sidebar = ({navItems}: SidebarProps) => {
 
+    const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 1024);
     const renderItem = (item: AppRoute) => {
 
         if (item.type === RouteType.LINK && item.path) {
@@ -15,9 +18,9 @@ export const Sidebar = ({navItems}: SidebarProps) => {
                 <li key={item.id}>
                     <NavLink
                         to={item.path}
-                        className={styles.row}
+                        className={css.row}
                     >
-                        <span className={styles.icon}>{item.icon}</span>
+                        <span className={css.icon}>{item.icon}</span>
                         <span>{item.label}</span>
                     </NavLink>
                 </li>
@@ -25,27 +28,35 @@ export const Sidebar = ({navItems}: SidebarProps) => {
         } else if (item.type === RouteType.COMPONENT) {
             return (
                 <li key={item.id}>
-                    <div className={styles.row}>
-                        <span className={styles.icon}>{item.icon}</span>
-                        <span>{item.element}</span>
+                    <div className={css.row}>
+                        <span className={css.icon}>{item.icon}</span>
+                        {item.element}
                     </div>
                 </li>
             )
         }
     }
 
+    const toggleCollapsed=()=>{
+        setIsCollapsed(prev=>!prev)
+    }
 
     return (
-        <aside className={styles.sidebar}>
-            <nav>
-                <ul>
-                    {navItems.map((item) => (
-                        renderItem(item)
-                    ))}
-                </ul>
-            </nav>
+        <>
+            <button className={css.MenuButton} onClick={toggleCollapsed}>
+                <span className={css.icon}><MdMenu/></span>
+            </button>
+            <aside className={`${css.sidebar} ${isCollapsed? css.collapsed:''}`}>
+                <nav>
+                    <ul>
+                        {navItems.map((item) => (
+                            renderItem(item)
+                        ))}
+                    </ul>
+                </nav>
 
-        </aside>
+            </aside>
+        </>
     );
 };
 

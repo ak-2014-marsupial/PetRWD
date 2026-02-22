@@ -1,63 +1,132 @@
 .sidebar {
-  /* Colors */
-  --_sidebar-bg: var(--layer-2-bg);
-  --_sidebar-text-color: var(--layer-2-text);
-  --_sidebar-bg-active: var(--layer-2-active);
-  --_sidebar-bg-hover: var(--layer-2-hover);
-  --_sidebar-bg-accent: var(--layer-2-accent);
-  --_sidebar-text-accent-color: var(--layer-2-on-accent);
+    /* Colors */
+    --_sidebar-bg: var(--layer-2-bg);
+    --_sidebar-text-color: var(--layer-2-text);
+    --_sidebar-bg-active: var(--layer-2-active);
+    --_sidebar-bg-hover: var(--layer-2-hover);
+    --_sidebar-bg-accent: var(--layer-2-accent);
+    --_sidebar-text-accent-color: var(--layer-2-on-accent);
 
-  --_sidebar-border-color: var(--layer-2-border);
+    --_sidebar-border-color: var(--layer-2-border);
 
-  /* Sizes (in rem, base 16px) */
-  --_sidebar-width: $SIDEBAR_WIDTH;
+    /* Sizes (in rem, base 16px) */
+    --_sidebar-width: $SIDEBAR_WIDTH;
+    --_sidebar-width-collapsed: 0;
+    --_sidebar-toggler-size: 2rem;
+    --_sidebar-border-radius: 0.2rem;
+    --_sidebar-menu-button-height: 2.5rem;
+    --_sidebar-menu-button-width: 2.5rem;
 
-  /* Transitions */
-  --_sidebar-transition-duration: $TRANSITION_SPEED;
+    /* Paddings & Gaps (in rem) */
+    --_gap-sm: 0.25rem; /* 4px */
+    --_gap-md: 0.75rem; /* 12px */
+    --_padding-xs: 0.5rem; /* 9px */
+    --_padding-xl: 1.2rem;
+
+    /* Transitions */
+    //--_sidebar-transition-duration: 0.5s;
+    //--_sidebar-transition-duration: calc($TRANSITION_SPEED * 1s);
+    --_sidebar-transition-duration: $TRANSITION_SPEED;
 
 
-  width: var(--_sidebar-width);
-  background-color: var(--_sidebar-bg);
-  border-right: 1px solid var(--_sidebar-border-color);
-  /*height: 100%;*/
-  font-size: 1.2rem;
-  display: flex;
-  flex-direction: column;
+    width: var(--_sidebar-width);
+    background-color: var(--_sidebar-bg);
+    border-right: 1px solid var(--_sidebar-border-color);
+    /*height: 100%;*/
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.collapsed {
+    width: var(--_sidebar-width-collapsed);
 }
 
 .sidebar nav {
-  flex-grow: 1; /* Allows nav to take up available space */
+    flex-grow: 1; /* Allows nav to take up available space */
 }
 
 .sidebar nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .row,
 .active {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 0.7rem;
-  color: var(--_sidebar-text-color);
-  text-decoration: none;
-  transition: background-color var(--_sidebar-transition-duration);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0.7rem;
+    color: var(--_sidebar-text-color);
+    text-decoration: none;
+    transition: background-color var(--_sidebar-transition-duration);
 }
 
 .row:hover {
-  background-color: var(--_sidebar-bg-hover);
+    background-color: var(--_sidebar-bg-hover);
 }
 
 .active {
-  background-color: var(--_sidebar-bg-active);
-  color: var(--_sidebar-text-color);
-  font-weight: bold;
+    background-color: var(--_sidebar-bg-active);
+    color: var(--_sidebar-text-color);
+    font-weight: bold;
 }
 
-.icon{
-font-size: 1.4rem;
+.icon {
+    font-size: 1.4rem;
 }
 
 
+.MenuButton {
+    position: absolute;
+    /*right: var(--_padding-xl);*/
+    right: 1.2rem;
+    height: var(--_sidebar-toggler-size);
+    width: var(--_sidebar-toggler-size);
+    border: 1px solid var(--_sidebar-border-color);
+    cursor: pointer;
+    display: flex;
+    //background-color: var(--layer-3-accent);
+    background: var(--_sidebar-bg-accent);
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--_sidebar-border-radius);
+    transition: var(--_sidebar-transition-duration) ease;
+    //transition: 3s ease;
+    opacity: 0;
+}
+
+.MenuButton span {
+    font-size: 1.2rem;
+    transition: var(--_sidebar-transition-duration) ease;
+}
+
+
+@media (max-width: $MOBILE_BREAKPOINT) {
+
+    .sidebar {
+        transition: all var(--_sidebar-transition-duration) ease;
+    }
+
+    .MenuButton {
+        position: fixed;
+        left: var(--_padding-xl);
+        top: var(--_padding-xl);
+        height: var(--_sidebar-menu-button-height);
+        width: var(--_sidebar-menu-button-width);
+        display: flex;
+        color: var(--_sidebar-text-accent-color);
+        opacity: 1;
+    }
+
+    .collapsed {
+        left: calc(var(--_sidebar-width) * -1);
+    }
+
+    .collapsed .MenuButton {
+        transform: none;
+    }
+}

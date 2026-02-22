@@ -1,7 +1,10 @@
 /*********** Baseline, reset styles ***********/
 /*https://range-input-css.netlify.app/*/
 .InputRange {
-    color: var(--layer-3-text, yellow)
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    //color: var(--layer-3-text, yellow)
 }
 
 .InputRange input {

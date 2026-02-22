@@ -81,7 +81,7 @@ export const routerConfig: AppRoute[] = [
         type: RouteType.COMPONENT,
         isNav: false,
         section: 'settings',
-        label: "Theme Color Editor",
+        label: "Color Editor",
         icon: <GiSettingsKnobs/>,
     },
     {

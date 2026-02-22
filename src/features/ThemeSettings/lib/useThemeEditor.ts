@@ -22,7 +22,7 @@ export const useThemeEditor = (theme: Theme) => {
         themeVarsService.set(...(Object.values(vars) as Parameters<typeof themeVarsService.set>));
     }, [vars]);
 
-    const setFieldValue = useCallback((id: string, value: string) => {
+    const setFieldValue = useCallback(({id,value}:{id: string, value: string}) => {
         setVars(prev => ({ ...prev, [id]: Number(value) }));
     }, []);
 

@@ -1,17 +1,18 @@
 import  { memo } from 'react';
 import css from "./InputRange.module.css"
 
-interface SliderProps {
+interface InputRangeProps {
     id: string;
     label: string;
     value: number;
     min: number;
     max: number;
+    step?:string;
     unit?: string;
-    onChange: (id: string, value: string) => void;
+    onChange: ({id, value}:{id: string, value: string}) => void;
 }
 
- export const InputRange = memo(({ id, label, value, min, max, unit, onChange }: SliderProps) => {
+ export const InputRange = memo(({ id, label, value, min, max,step, unit, onChange }: InputRangeProps) => {
     // console.log(`Render InputRange: ${id}`); // Для перевірки оптимізації
     return (
         <div className={css.InputRange}>
@@ -21,8 +22,9 @@ interface SliderProps {
                 type="range"
                 min={min}
                 max={max}
+                step={step}
                 value={value}
-                onChange={(e) => onChange(id, e.target.value)}
+                onChange={(e) => onChange({id, value:e.target.value})}
             />
         </div>
     );
