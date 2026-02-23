@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    //color: var(--layer-3-text, yellow)
 }
 
 .InputRange input {
@@ -14,7 +13,7 @@
     appearance: none;
     background: transparent;
     cursor: pointer;
-    /*width: 5rem;*/
+    width: 100%; /* Explicitly set width to 100% */
 }
 
 /* Removes default focus */

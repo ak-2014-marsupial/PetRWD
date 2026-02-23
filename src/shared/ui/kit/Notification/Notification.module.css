@@ -12,15 +12,43 @@
     padding: 16px 24px;
     border-radius: 12px;
     color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; /* Changed from justify-content: space-between; align-items: center; */
+    flex-direction: column; /* Stack message and actions vertically */
+    gap: 12px; /* Space between message and actions */
     min-width: 280px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     animation: slideIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative; /* For absolute positioning of closeBtn */
 }
+
+.message {
+    flex-grow: 1; /* Allow message to take available space */
+    margin-right: 24px; /* Space for close button */
+}
+
+.actions {
+    display: flex;
+    gap: 8px; /* Space between action buttons */
+    justify-content: flex-end; /* Align buttons to the right */
+}
+
+.actionButton {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.actionButton:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
 
 .info { background: rgba(33, 150, 243, 0.9); }
 .success { background: rgba(76, 175, 80, 0.9); }
@@ -33,11 +61,13 @@
     color: white;
     font-size: 20px;
     cursor: pointer;
-    margin-left: 12px;
     padding: 0;
     line-height: 1;
     opacity: 0.7;
     transition: opacity 0.2s;
+    position: absolute; /* Position relative to .toast */
+    top: 12px;
+    right: 12px;
 }
 
 .closeBtn:hover {

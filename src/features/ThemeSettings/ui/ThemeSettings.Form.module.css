@@ -15,7 +15,7 @@
     white-space: nowrap;
     flex: 1;
     overflow-y: auto;
-    max-height: 70vh;
+    max-height: 55vh;
     background-color: var(--layer-1-bg);
     border-radius: 0.5rem;
     border: 1px solid var(--layer-1-border);
@@ -27,6 +27,9 @@
     width: 100%;
     gap: 0.5rem;
     padding: 0 0.5rem;
+}
+.content input{
+    padding-right: 1.5rem;
 }
 
 .footer {

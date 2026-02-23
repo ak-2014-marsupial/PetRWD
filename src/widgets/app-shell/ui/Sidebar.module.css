@@ -76,6 +76,8 @@
     color: var(--_sidebar-text-color);
     text-decoration: none;
     transition: background-color var(--_transition-speed);
+    flex-shrink: 1; /* Allows the flex item to shrink */
+    min-width: 0;   /* Prevents flex items from overflowing their container */
 }
 
 .row:hover {
@@ -92,11 +94,23 @@
     font-size: 1.4rem;
 }
 
+.sectionTitle {
+    color: var(--_sidebar-text-color);
+    padding: 0.7rem 0.7rem 0.3rem 0.7rem; /* Adjust padding as needed */
+    font-size: 0.9rem; /* Smaller font size for titles */
+    font-weight: bold;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-top: 1rem;
+    border-bottom: 1px solid var(--_sidebar-border-color);
+    margin-bottom: 0.5rem;
+}
+
 
 .MenuButton {
     position: absolute;
     right: 0;
-    top:0;
+    top: 0;
     height: var(--_sidebar-toggler-size);
     width: var(--_sidebar-toggler-size);
     border: 1px solid var(--_sidebar-border-color);

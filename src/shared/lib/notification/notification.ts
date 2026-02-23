@@ -1,10 +1,17 @@
 export type NotificationType = 'info' | 'success' | 'error' | 'warning';
 
+// New interface for notification actions
+export interface NotificationAction {
+    label: string;
+    callback: () => void;
+}
+
 export interface Notification {
     id: string;
     message: string;
     type: NotificationType;
     duration?: number;
+    actions?: NotificationAction[]; // Optional actions for interactive notifications
 }
 
 type Listener = (notifications: Notification[]) => void;
@@ -31,14 +38,16 @@ export const notificationService = {
         };
     },
 
-    add(message: string, type: NotificationType = 'info', duration = 3000) {
+    // Updated add method to accept optional actions
+    add(message: string, type: NotificationType = 'info', duration = 3000, actions?: NotificationAction[]) {
         const id = crypto.randomUUID();
-        const newNotification: Notification = { id, message, type, duration };
+        const newNotification: Notification = { id, message, type, duration, actions };
         
         notifications.push(newNotification);
         notify();
 
-        if (duration > 0) {
+        // Notification should only auto-dismiss if no actions are present and duration is > 0
+        if (!actions && duration > 0) {
             setTimeout(() => this.remove(id), duration);
         }
     },
@@ -49,8 +58,8 @@ export const notificationService = {
     },
 
     // Зручні методи для виклику
-    success(msg: string, duration?: number) { this.add(msg, 'success', duration); },
-    error(msg: string, duration?: number) { this.add(msg, 'error', duration); },
-    info(msg: string, duration?: number) { this.add(msg, 'info', duration); },
-    warning(msg: string, duration?: number) { this.add(msg, 'warning', duration); },
+    success(msg: string, duration?: number, actions?: NotificationAction[]) { this.add(msg, 'success', duration, actions); },
+    error(msg: string, duration?: number, actions?: NotificationAction[]) { this.add(msg, 'error', duration, actions); },
+    info(msg: string, duration?: number, actions?: NotificationAction[]) { this.add(msg, 'info', duration, actions); },
+    warning(msg: string, duration?: number, actions?: NotificationAction[]) { this.add(msg, 'warning', duration, actions); },
 };

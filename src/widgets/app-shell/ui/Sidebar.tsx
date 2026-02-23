@@ -11,6 +11,12 @@ interface SidebarProps {
 export const Sidebar = ({navItems}: SidebarProps) => {
 
     const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 1024);
+    
+    // Filter items into sections
+    const mainItems = navItems.filter(item => item.section === 'main' );
+    const settingsItems = navItems.filter(item => item.section === 'settings' );
+
+
     const renderItem = (item: AppRoute) => {
 
         if (item.type === RouteType.LINK && item.path) {
@@ -53,11 +59,23 @@ export const Sidebar = ({navItems}: SidebarProps) => {
             </button>
             <aside className={css.sidebar}>
                 <nav>
-                    <ul>
-                        {navItems.map((item) => (
-                            renderItem(item)
-                        ))}
-                    </ul>
+                    {mainItems.length > 0 && (
+                        <>
+                            {/* <h3 className={css.sectionTitle}>Main</h3> */} {/* Optional: Add section title */}
+                            <ul>
+                                {mainItems.map((item) => renderItem(item))}
+                            </ul>
+                        </>
+                    )}
+
+                    {settingsItems.length > 0 && (
+                        <>
+                            <h3 className={css.sectionTitle}>Settings</h3> {/* Optional: Add section title */}
+                            <ul>
+                                {settingsItems.map((item) => renderItem(item))}
+                            </ul>
+                        </>
+                    )}
                 </nav>
 
             </aside>
