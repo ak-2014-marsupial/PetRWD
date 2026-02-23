@@ -7,8 +7,8 @@
     color: var(--layer-1-text);
     border-radius: 0.5rem;
     top: 15vh;
-    /*max-width: 60vw;*/
-    padding: 0.8rem;
+    //max-width: 75vw;
+    padding: 0.5rem 2rem 0.5rem 0;
 }
 
 .trigger {

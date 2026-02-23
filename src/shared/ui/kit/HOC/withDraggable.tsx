@@ -12,6 +12,8 @@ export type DraggableProps = {
     axis?: DraggableAxis;
     /** Defines a fixed position relative to the parent for one or more sides. */
     pinPosition?: { left?: number; right?: number; top?: number; bottom?: number; };
+    /** If true, the component cannot be dragged outside the viewport. */
+    lockToViewport?: boolean;
     className?: string;
 };
 
@@ -23,6 +25,7 @@ export function withDraggable<T extends object>(Component: React.ComponentType<T
             onDragEnd,
             axis = 'both',
             pinPosition,
+            lockToViewport = true,
             className,
             ...restProps
         } = props;
@@ -32,6 +35,7 @@ export function withDraggable<T extends object>(Component: React.ComponentType<T
             initialPosition: position,
             axis,
             onDragEnd,
+            lockToViewport,
         });
 
         // "Polite" styles: only set what's strictly necessary for dynamic positioning

@@ -1,9 +1,9 @@
 import {HomePage, NotFoundPage, ThemeSettingsPage} from '@/pages';
-import {DocViewer, FontSizePicker, ThemeToggle, ThemeSettingsToggle} from '@/features';
+import {DocViewer, FontSizePicker, ThemeToggle, ThemeSettingsToggle, ClearStorageButton} from '@/features';
 
 import {
     FaHome, FaInfoCircle, FaPalette,
-    FaRoute, FaAdjust, FaBell
+    FaRoute, FaAdjust, FaBell, FaTrashAlt
 } from 'react-icons/fa';
 import {RxFontSize} from "react-icons/rx";
 import {GiSettingsKnobs} from "react-icons/gi";
@@ -83,6 +83,16 @@ export const routerConfig: AppRoute[] = [
         section: 'settings',
         label: "Color Editor",
         icon: <GiSettingsKnobs/>,
+    },
+    {
+        id: 'clear-storage',
+        element: ({label}) => <ClearStorageButton label={label}/>,
+        type: RouteType.COMPONENT,
+        isNav: true,
+        section: 'settings',
+        label: "Reset All Data",
+        icon: <FaTrashAlt/>,
+
     },
     {
         id: 'not-found',

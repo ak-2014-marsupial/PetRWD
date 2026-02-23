@@ -9,6 +9,7 @@ export interface UseDraggableOptions {
     initialPosition?: Position;
     axis?: DraggableAxis;
     onDragEnd?: (position: Position) => void;
+    lockToViewport?: boolean;
 }
 
 export function useDraggable({
@@ -16,6 +17,7 @@ export function useDraggable({
                                  initialPosition = {x: 0, y: 0},
                                  axis = 'both',
                                  onDragEnd,
+                                 lockToViewport = false,
                              }: UseDraggableOptions = {}) {
     const [currentPos, setCurrentPos] = useState<Position>(initialPosition);
     const [isDragging, setIsDragging] = useState(false);
@@ -30,6 +32,9 @@ export function useDraggable({
         if (!canDrag) return;
 
         const target = e.currentTarget as HTMLElement;
+        const rect = target.getBoundingClientRect();
+        const elWidth = rect.width;
+        const elHeight = rect.height;
         const pointerId = e.pointerId;
 
         const startPointerX = e.pageX;
@@ -58,10 +63,15 @@ export function useDraggable({
             }
 
             if (dragStarted) {
-                const newPos = {
-                    x: axis === 'y' ? startElX : startElX + deltaX,
-                    y: axis === 'x' ? startElY : startElY + deltaY,
-                };
+                let newX = axis === 'y' ? startElX : startElX + deltaX;
+                let newY = axis === 'x' ? startElY : startElY + deltaY;
+
+                if (lockToViewport) {
+                    newX = Math.max(0, Math.min(newX, window.innerWidth - elWidth));
+                    newY = Math.max(0, Math.min(newY, window.innerHeight - elHeight));
+                }
+
+                const newPos = { x: newX, y: newY };
 
                 latestPos = newPos;
                 setCurrentPos(newPos);

@@ -95,7 +95,8 @@
 
 .MenuButton {
     position: absolute;
-    right: var(--_padding-xl);
+    right: 0;
+    top:0;
     height: var(--_sidebar-toggler-size);
     width: var(--_sidebar-toggler-size);
     border: 1px solid var(--_sidebar-border-color);
@@ -140,8 +141,8 @@
 
     .MenuButton {
         position: fixed;
-        right: var(--_padding-xl);
-        top: var(--_padding-xl);
+        right: 0;
+        top: 3rem;
         height: var(--_sidebar-menu-button-height);
         width: var(--_sidebar-menu-button-width);
         display: flex;
