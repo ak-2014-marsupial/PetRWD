@@ -6,13 +6,13 @@ import type {ReactNode} from "react";
 
 import css from "./ThemeSettings.Form.module.css";
 
-interface ThemeSettingsFormProps{
-    theme:Theme;
-    headerSlot?:ReactNode;
+interface ThemeSettingsFormProps {
+    theme: Theme;
+    headerSlot?: ReactNode;
 }
 
 
-export const ThemeSettingsForm = ({theme,headerSlot}: ThemeSettingsFormProps) => {
+export const ThemeSettingsForm = ({theme, headerSlot}: ThemeSettingsFormProps) => {
     const {vars, setFieldValue, save, reset} = useThemeEditor(theme);
 
     return (
@@ -22,17 +22,24 @@ export const ThemeSettingsForm = ({theme,headerSlot}: ThemeSettingsFormProps) =>
                 <h5>Налаштування ({theme})</h5>
             </div>
             <div className={css.content}>
-                {FIELDS.map((field) => (
-                    <InputRange
-                        key={field.id}
-                        {...field}
-                        value={vars[field.id]}
-                        onChange={setFieldValue}
-                    />
+                {FIELDS.map((group) => (
+                    <div key={group.group} className={css.group}>
+                        <h4 className={css.groupLabel}>{group.label}</h4>
+
+                        {group.children.map((field) => (
+                                <InputRange
+                                    key={field.id}
+                                    className={css.child}
+                                    {...field}
+                                    value={vars[field.id]}
+                                    onChange={setFieldValue}
+                                />
+                        ))}
+                    </div>
                 ))}
             </div>
             <div className={css.footer}>
-                <Button onClick={save}>Зберегти</Button>
+                <Button  onClick={save}>Зберегти</Button>
                 <Button onClick={reset}>Очистити</Button>
             </div>
         </>

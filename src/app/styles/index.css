@@ -21,6 +21,9 @@ button, input, select, textarea{
     color: inherit;
 }
 
+input[type="range"]{
+    touch-action: pan-y;
+}
 
 /* --- CUSTOM SCROLLBARS (Webkit: Chrome, Safari, Edge) --- */
 /* Ставимо на всі елементи через ::-webkit-scrollbar */
