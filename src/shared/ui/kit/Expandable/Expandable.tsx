@@ -1,4 +1,4 @@
-import { useState, ReactNode, memo } from "react";
+import { useState, type ReactNode, memo } from "react";
 import css from "./Expandable.module.css";
 
 interface ExpandableProps {
