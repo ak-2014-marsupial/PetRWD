@@ -1,0 +1,68 @@
+.Expandable {
+    background-color: var(--layer-1-bg);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: background-color 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.Expandable.expanded {
+    border-color: var(--layer-1-active);
+    background-color: color-mix(in srgb, var(--layer-1-bg) 95%, white);
+}
+
+.summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.summary:active {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--layer-1-on-bg);
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.value {
+    font-family: monospace;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.icon {
+    font-size: 1.2rem;
+    line-height: 1;
+    width: 1.2rem;
+    text-align: center;
+    opacity: 0.6;
+}
+
+.content {
+    padding: 0 1rem 1rem 1rem;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

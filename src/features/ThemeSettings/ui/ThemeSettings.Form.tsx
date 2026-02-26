@@ -1,7 +1,7 @@
 import type {Theme} from "@/shared/lib";
 import {useThemeEditor} from "@/features/ThemeSettings/lib/useThemeEditor.ts";
 import {FIELDS} from "@/features/ThemeSettings/model/config.ts";
-import {Button, InputRange} from "@/shared/ui";
+import {Button, InputRange, Expandable} from "@/shared/ui";
 import type {ReactNode} from "react";
 
 import css from "./ThemeSettings.Form.module.css";
@@ -27,13 +27,20 @@ export const ThemeSettingsForm = ({theme, headerSlot}: ThemeSettingsFormProps) =
                         <h4 className={css.groupLabel}>{group.label}</h4>
 
                         {group.children.map((field) => (
+                            <Expandable 
+                                key={field.id} 
+                                title={field.label} 
+                                value={vars[field.id]} 
+                                unit={field.unit}
+                            >
                                 <InputRange
-                                    key={field.id}
                                     className={css.child}
                                     {...field}
+                                    hideLabel
                                     value={vars[field.id]}
                                     onChange={setFieldValue}
                                 />
+                            </Expandable>
                         ))}
                     </div>
                 ))}

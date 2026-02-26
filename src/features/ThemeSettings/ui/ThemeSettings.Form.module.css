@@ -18,7 +18,7 @@
     border-radius: 0.5rem;
 }
 .group{
-    padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+    padding: 0.5rem;
     background-color: var(--layer-2-bg);
 
     display: flex;
@@ -26,20 +26,15 @@
     gap: 0.5rem;
     border-radius: 0.5rem;
     border: 1px solid var(--layer-2-border);
-
-
 }
 
 .child {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 1rem;
-    padding:  0.5rem;
-    background-color: var(--layer-1-bg);
+    padding: 0.5rem 0;
     --tomb-color: var(--layer-1-accent);
     --track-color: var(--layer-1-active);
-    border-radius: 0.5rem;
 }
 
 

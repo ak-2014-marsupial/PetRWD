@@ -10,14 +10,15 @@ interface InputRangeProps {
     step?:string;
     unit?: string;
     className?: string;
+    hideLabel?: boolean;
     onChange: ({id, value}:{id: string, value: string}) => void;
 }
 
- export const InputRange = memo(({ id, label, value, min, max,step, unit, className, onChange }: InputRangeProps) => {
+ export const InputRange = memo(({ id, label, value, min, max,step, unit, className, hideLabel, onChange }: InputRangeProps) => {
     // console.log(`Render InputRange: ${id}`); // Для перевірки оптимізації
     return (
         <div className={`${css.InputRange} ${className || ''}`}>
-            <label htmlFor={id}>{label}: {value}{unit}</label>
+            {!hideLabel && <label htmlFor={id}>{label}: {value}{unit}</label>}
             <input
                 id={id}
                 type="range"
