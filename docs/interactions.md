@@ -24,6 +24,8 @@ const { position, handlePointerDown, isDragging } = useDraggable({
     lockToViewport: true
 });
 
+{% raw %}
+```tsx
 return (
     <div 
         onPointerDown={handlePointerDown}
@@ -33,6 +35,7 @@ return (
     </div>
 );
 ```
+{% endraw %}
 
 ## Компонент `FloatingTrigger`
 
